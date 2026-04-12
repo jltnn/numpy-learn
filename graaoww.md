@@ -29,10 +29,43 @@
         a * 3.    --> [3, 6, 9, 12]
         a ** 2    --> [1, 4, 9, 16]
         np.sqrt(a)--> [1.0, 1.41, 1.73, 2.0]
+
     Array info
     Ex: a = np. array([[1, 2, 3], [4, 5, 6]])
         a.shape  --> (2,3) (2 rows, 3 columns)
         a.ndim.  --> 2.    (it's 2D)
         a.size.  --> 6.    (ttl num of elements)
         a.dtype. --> int64.(type of data store)
-        
+
+    Array info
+    Ex: a = np. array([[1, 2, 3], [4, 5, 6]])
+        a.shape  --> (2,3) (2 rows, 3 columns)
+        a.ndim.  --> 2.    (it's 2D)
+        a.size.  --> 6.    (ttl num of elements)
+        a.dtype. --> int64.(type of data store)
+
+    Grab Elements (Indexing)
+    Ex: a = np.array([10,20,30,40,50])
+        a[0]   --> 10 (first element)
+        a[-1]. --> 50 (last element)
+        a[1:4].--> [20, 30, 40] (slice 1 to 4)
+
+    2D arrays:
+    Ex: table = np.array([[1, 2, 3],[4, 5, 6]])
+        table[0, 1]   -->  2 (row o, column 1)
+        table[1, :]   -->  [4, 5, 6] (entire row 1)
+        table[:, 2].  --> [3, 6] (entire column 2)
+
+    Creating arrays quickly
+    Ex: np.zeros((3,3)).     --> 3x3 table filled with 0s
+        np.ones((2,4)).      --> 2x4 table filled with 1s
+        np.arange(0, 10, 2). --> [0, 2, 4, 6, 8] - like range()
+        np.linspace(0, 1, 5) --> [0, 0.25, 0.5, 0.75, 1.0] - evenly spaced
+
+    Quick statistics
+    Ex: data = np.array([4, 7, 2, 9, 1, 5])
+        np.sum(data).     --> 28
+        np.mean(data).    --> 4.67 (average)
+        np.max(data).     --> 9
+        np.min(data).     --> 1
+        np.std(data).     --> standard deviation
