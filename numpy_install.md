@@ -8,7 +8,7 @@ This create a folder called venv inside the project. It will be the priv Python 
 source venv/bin/activate
 It will change the terminal to show (venv) on the left - it means it's activated
 
-Note: you need to do this step every time u open new terminal to activate it, to deactivate change the keyword to 'deactivate'
+Note: you need to do this step every time u open new terminal to activate it, to deactivate just type in command line 'deactivate'
 ## Step 4: install numpy inside it
 pip install numpy
 ## Step 5: run the file
