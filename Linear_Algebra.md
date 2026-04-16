@@ -87,7 +87,28 @@ and displacement vector:
 - The shadown cast one vector onto another one is the projection. It tells "How much of vector A is pointing in the direction of vector B?"
 - In ML, projections are being used for:
     1. Dimensionality Reduction (PCA)
-    Principle Component Analysis (PCA) is one of the most common ways to simplify huge data sets. It works by projecting high-dimensional data (like a 100-variable spreadsheet) onto a lower-dimensional "best-fit" line or plane
+    Principle Component Analysis (PCA) is one of the most common ways to simplify huge data sets. It works by projecting high-dimensional data (like a 100-variable spreadsheet) onto a lower-dimensional "best-fit" line or plane.
+    2. Orthogonalization (Remove Redundancy)
+    In ML, when we dont want "features" overlap, we use projection to "subtract" the overlapping part abd leave the perfectly independent(orthogonal) pieces
+    3. Recommendation Systems (Cosine similarity)
+    When Netflix or Spotify rec something, they r often measuring how much ur taste aligns with a movie vector. The math used to calculate the angle between them is deeply tied to the formula for projection
+- Formula for projection of a onto b:
+        projb(a) = ((a.b)/(||b||^2))b
+- Applied on Numpy:
+```py
+    import numpy as np
+    a = np.array([3,4,0])
+    b = np.array([5,0,0]) #Points straight along the X-axis
+    #Find the dot product:
+    dot_product = np.dot(a, b)
+    #Magnitude of b squared
+    mag_b_sq = np.linalg.norm(b)**2
+    #Projection vector
+    projection = (dot_product/mag_b_sq)*b
+    print(f"Projection: {projection}")
+    # Output: [3.0, 0.0, 0.0] -> shadowed the x-component of a onto b
+```
+- The projection is the *prediction* (Where the model thinks the data should be on the line). The starting vector (a) is the *Actual data* where the point really is in space. and the distance from a to the projection is the *Error* (how far off the prediction was)
 ### Unit vector
 - Shrink a vector to length 1 while keeping its direction. Useful for "direction only" comparisons.
     `np.linalg.norm()`
@@ -97,6 +118,57 @@ and displacement vector:
     unit = v / np.linalg.norm(v)
     print(unit) #[0.6 0.8]
     print(np.linalg.norm(unit)) #1.0
+    ```
+### Cosine Similarity:
+- In ML, Cosine Similarity is used to measure how "related" two things are.
+- Geometric Formula: 
+    a.b = ||a||||b||cos()
+    -> Cosine Similarity formula: 
+    cos()= (ab)/||a||||b||
+- Results translate:
+    1. cos() = 1 (which means angle = 0): The vectors points in the exact same direction -> Highly similar
+    2. cos() = 0 (Angle = 90): The vectors are orthogonal -> Nothing in common
+    3. Cos() = -1: Point in opposite directions -> Perfectly dissimilar
+- Application in Numpy:
+```py
+    import numpy as np
+    def cosine_similarity(v1, v2):
+        dot_prod = np.dot(v1, v2)
+        mag1 = np.linalg.norm(v1)
+        mag2 = np.linalg.norm(v2)
+        return dot_prod / (mag1 *mag2)
+    
+    user = np.array([5, 4, 0])
+    #Suppose user likes action(5), sci-fi(4), Romance(0)
+    movie_a = np.array([4, 5, 1])
+    #Suppose move a is ation/sci-fi
+    movie_b = np.array([0, 1, 5])
+    print(cosine_similarity(user, movie_a).4f)
+    print(cosine_similarity(user, movie_b).4f)
+```
+### Cross product:
+- Only used/applied in 3D vectors
+- The cross product of vectors:
+u~ = [u1, u2, u3], v~ = [ v1, v2, v3] belongs to R3 is the vector
+    u~ x v~ = [u2v3 - u3v2, u3v1 - u1v3, u1v2 - u2v1]
+- The cross product is an operation that takes two 3D vectors ( a and b) and spits out a new third vector:
+    1. Direction: the result vector points exact 90 to both original vectors.
+    2. Magnitude (Length): new vector length is equal to the area of the parallelogram formed by the original two vectors
+- In math, the order of execution of cross product is important.
+- Numpy application:
+```py
+    import numpy as np
+    a = np.array([1, 0, 0]) # Points along X
+    b = np.array([0, 1, 0]) # Points along Y
+    # The cross product will point along Z
+    result = np.cross(a, b)
+    #Output: [0, 0, 1]
+```
+- Direction of the cross product: cross product(u~ x v~) is orthogonal to both u~ and v~.
+    If u~ and v~ are parallel -> cross product = 0 -> they are the same and redundant
+    If u~ and v~ are not parallel, the set of linear combinations of u~ and v~ is a plane in R3. The cross product must be 90 to this plane so there are only 2 choices for its direction:
+    
+- In real life application (Physics engines and 3D computer) cross product is used to find normals (which way a surface is facing..)
 ## Matrices
 - A matrix is a 2D grid of numbers, with rows and columns. A "3x2 matrix" has 3 rows and 2 columns. In Numpy, it's a 2D array.
     Ex:
@@ -107,6 +179,7 @@ and displacement vector:
     print(A.shape) #(2, 3)
     print(A[0]) #(1 2 3) <- first row
     print(A[:, 1]) #[2 5] <- second column
+    ```
 ### Useful Matrix creators
 - All zeros: 
 `np.zeros((3, 3))`
@@ -125,3 +198,4 @@ Ex:
     print(A.T)
     #[[1 4]] [2 5] [3 6]]
     print(A.T.shape) #(3, 2)
+```

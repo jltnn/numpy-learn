@@ -31,3 +31,6 @@ movie_a = np.array([4, 5, 1])
 movie_b = np.array([0, 1, 5])
 print(cosine_similarity(user, movie_a))
 print(cosine_similarity(user, movie_b))
+#0.9639253854237597
+#0.12251277836633778
+#the movie a is more similar compared to movie b
