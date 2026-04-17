@@ -166,9 +166,14 @@ u~ = [u1, u2, u3], v~ = [ v1, v2, v3] belongs to R3 is the vector
 ```
 - Direction of the cross product: cross product(u~ x v~) is orthogonal to both u~ and v~.
     If u~ and v~ are parallel -> cross product = 0 -> they are the same and redundant
-    If u~ and v~ are not parallel, the set of linear combinations of u~ and v~ is a plane in R3. The cross product must be 90 to this plane so there are only 2 choices for its direction:
-    
-- In real life application (Physics engines and 3D computer) cross product is used to find normals (which way a surface is facing..)
+    If u~ and v~ are not parallel, the set of linear combinations of u~ and v~ is a plane in R3. The cross product must be 90 to this plane so there are only 2 choices for its direction: either up or down
+
+- In real life application (Physics engines and 3D computer) cross product is used to find normals (which way a surface is facing..). In robotics or game physics, cross product is used to check if an object is rotating clockwise or counter-wise to an axis. In data cleaning, if the cross product of 2 data points is zero, the points r collinear and one might be redundant.
+- While the `np.cross` determine the directions, the length of the resulting vector tells u the area of the parallelogram formed by a and b.
+    ||a x b|| = ||a||||b||sin()
+- Numpy application to find this area: 
+   `np.linalg.norm(np.cross(a,b))`
+
 ## Matrices
 - A matrix is a 2D grid of numbers, with rows and columns. A "3x2 matrix" has 3 rows and 2 columns. In Numpy, it's a 2D array.
     Ex:
@@ -180,6 +185,21 @@ u~ = [u1, u2, u3], v~ = [ v1, v2, v3] belongs to R3 is the vector
     print(A[0]) #(1 2 3) <- first row
     print(A[:, 1]) #[2 5] <- second column
     ```
+### Parametric
+- The equation of a line in R3 with direction vector d~ = [d1, d2, d3] has:
+    - Vector form: x~ = p~ + td~, t belongs to R
+    - Parametric form: x = p1 + td1
+                       y = p2 + td2
+                       z = p3 + td3
+- Plane in R3. Let P be a plane in R3, a normal vector for P is a nonzero vector n~ which is 90 to P.
+    - The normal form of the equation of a plane P in R3 is (x - p)n = 0 or x~ . n~ = p~ . n~
+    where n~ is a normal vector for P and p~ is the position vector of a point on P
+    - The general form of the equation of a plane P in R3 is: ax + by + cz = d
+    where n~ = [a, b, c] is a normal vector for V, and d = n~ . p~ for the position vector p~ of a point V on P.
+- The intersection of a plan in R3 with a line in R3 can consist of zero points, one point, or infinitely many points
+
+### Matrix
+- A matrix is a rectangular array of real numbers
 ### Useful Matrix creators
 - All zeros: 
 `np.zeros((3, 3))`
