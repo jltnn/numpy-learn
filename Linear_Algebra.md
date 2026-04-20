@@ -17,7 +17,7 @@
 - If A=(a1,a2) is a point in the plane, we consider the vector from the origin O=(0,0) to A
 - We denote the vector by OA->=[a1,a2] [a1
                                         a2]
-- OA-> is the position vector of the point A. The scalars a1 and a2 are the components of )A->
+- OA-> is the position vector of the point A. The scalars a1 and a2 are the components of A->
 - If A=(a1,a2) and B=(b1,b2) are points, then we consider the vector from A to B. We say that A is the tail and B is the head/tip of the vector. 
 - The arrow determines a vector:
 AB->=[b1-a1, b2-a2]
@@ -200,12 +200,87 @@ u~ = [u1, u2, u3], v~ = [ v1, v2, v3] belongs to R3 is the vector
 
 ### Matrix
 - A matrix is a rectangular array of real numbers
+    - Augmented matrix of the system of linear equations. We use augmented matrices to formalise the process of solving systems of linear equations.
+    - The following list of elementary operations on systems of linear equations do not change the set of solution:
+        swapping 2 equations
+        multiplyuing an equation by a nonzero constant
+        adding a multiple of one equation to another
+    - These correspond to elementary row operations (EROs) on the augmented matrix:
+        swapping 2 rows
+        multiplying (each entry of) a row by a nonzero constant
+        adding a multiple of one row to another
+- A matrix is in row echelon form (REF) if
+    1. any rows of zeros r at the bottom
+    2. if each nonzero row, the first nonzero entry (called a leading entry) is in a column further to the right of leading entries in any rows above it.
+- Every system of linear equations has either: 
+    A unique solution
+    Infinitely many solutions
+    No solutions
+- The system is consistent if it has at least one solution, and inconsistent if it has no solutions
+- For 3 equations in 3 variables:
+    1. A unique solution: 3 planes all meet at a single point --> the solution is the single point met up by all 3 planes
+    2. Infinitely many solutions: solutions are all points on the line connected all 3 planes
+    3. No solutions: there will be no points in common to all three planes
+- The size of a matrix is m x n if it has m rows n n columns. The (i,j) - entry of a matrix A is the entry in the ith row and jth column of A, denoted by aij. A row matrix or row vector is a 1 x n matrix, and a column matrix or column vector is a m x 1 matrix. 
+- If A is an m x n we can write:
+    A = [ a11 a12 ... a1n
+          a21 a22 ... a2n
+          .   .   .... .
+          am1 am2 ... amn]
+    Or A = [aij] or A = [aij]mxn for short
+- A square matrix is a matrix of size n x n for some n. The diagonal matrix is a square matrix A are a11, a22,...,ann
+- A diagonal matrix is a square matrix in which all non-diagonal entries are zero. The identity matrix In is the n x n diagonal matrix with all diagonal entries equal to 1. The zereo matrix Omxn is the mxn matrix with all entries equal to O.
+- Equality of matrices: two m x n matrices A and B are equal if their corresponding entries are equal.
+### Matrix algebra
+- The sum of 2 m x n matrixes 
+A = [aij]mxn and B = [bij]mxn 
+is the m x n matrix
+A + B = [aij + bij]mxn
+- A + B is only defined if A and B have the same size
+- The scalar multiple of an m x n matrix A = [aij]mxn by a scalar c (belongs to R) is the m x n matrix:
+        cA = [caij]mxn
+- We write - A = (-1) A
+         A - B = A + (-1)B
+- Matrix multiplication is more complicated:
+        A = [aik]mxn be an mxn matrix
+        B = [bkj]nxp be an nxp matrix
+    Then we can define the matrix product 
+        AB = [cij]mxn of size mxp
+        where the entries cij are defined by 
+        cij = ai1  b1j + ai2 b2j + ... + ain bnj
+        -> cij is the dot product of vectors 
+        a~i = [ai1, ai2, ...ain] and b~j = [b1j, b2j,...,bnj]
+        corresponding to the ith row of A and the jth row of B. For this to happen, we need the number of columns A to be equal to the number of rows B. If the sizes dont match, AB is undefined.
+        A (m x n)
+        B (n x p)
+        result (m x p)
+- Matrix Multiplication in numpy: `A @ B`
+```py
+import numpy as np
+A = np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+B = np.array([
+    [7, 8],
+    [9, 10],
+    [11, 12]
+])
+#perform multiplication
+result = A @ B
+print(result)
+#Output:
+#[[58 64]
+#[139 154]]
+```
+- Be careful with the * because A * B is != A @ B, this is element-wise, it will multiple 2 matrix one by one in order.
+- Matrix inverse: the opposite of a matrix - like 1/A. Only square matrices can be inverted, and only if they are non-singular. `np.linalg.inv(A)
 ### Useful Matrix creators
 - All zeros: 
 `np.zeros((3, 3))`
 - All ones:
 `np.ones(2, 4)`
-- Identity matix (like "1" for matrices)
+- Identity matrix (like "1" for matrices)
 `np.eye(3)`
 #[[1,0,0],[0,1,0],[0,0,1]]
 - Random matrix
